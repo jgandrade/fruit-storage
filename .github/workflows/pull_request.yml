@@ -22,7 +22,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Lint code
+      - name: Fix Lint code
+        run: npm run lint:fix
+
+      - name: Check For Lint Errors
         run: npm run lint
 
   run_build:
