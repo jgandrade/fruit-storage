@@ -25,11 +25,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Fix Lint code
-        run: npm run lint:fix
-
-      - name: Check For Lint Errors
-        run: npm run lint
+      - name: Fix and Check Lint
+        run: npm run lint:staged
 
   run_build:
     runs-on: ubuntu-latest
