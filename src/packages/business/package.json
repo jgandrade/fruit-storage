@@ -7,7 +7,9 @@
     "start:dev": "yarn nodemon",
     "start": "yarn build && node build/index.js",
     "lint": "eslint . --ext .ts",
-    "build": "yarn tsc --build"
+    "lint:staged": "lint-staged && yarn lint",
+    "build": "yarn tsc --build",
+    "prepare": "cd ../../../ && husky src/packages/business/.husky"
   },
   "author": "John Glenn Andrade",
   "license": "MIT",
@@ -28,5 +30,8 @@
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
+  },
+  "lint-staged": {
+    "src/**/*.ts": "prettier --write"
   }
 }
