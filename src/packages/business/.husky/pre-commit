@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/../../.husky/husky.sh"
 
-yarn workspace business lint:staged
+yarn lint:staged
