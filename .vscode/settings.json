@@ -1,0 +1,6 @@
+{
+  "eslint.workingDirectories": [
+    "./src/packages/client-ui",
+    "./src/packages/business"
+  ]
+}
