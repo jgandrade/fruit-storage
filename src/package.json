@@ -1,0 +1,15 @@
+{
+  "name": "workspace-fruit-storage",
+  "version": "1.0.0",
+  "description": "A Fruit Storage Task that demonstrates Clean Architecture and Domain Driven Design",
+  "main": "index.js",
+  "repository": "https://github.com/jgandrade/fruit-storage-task",
+  "author": "John Glenn Andrade",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}
