@@ -33,5 +33,10 @@
   },
   "lint-staged": {
     "src/**/*.ts": "prettier --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint:staged"
+    }
   }
 }
