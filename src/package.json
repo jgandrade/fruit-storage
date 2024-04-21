@@ -10,13 +10,17 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "husky"
     ]
+  },
+  "scripts": {
+    "lint:business": "lint-staged-business && yarn workspace business lint",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2"
+  },
+  "lint-staged-business": {
+    "./packages/business/src/**/*.ts": "prettier --write"
   }
 }
