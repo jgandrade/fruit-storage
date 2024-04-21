@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+echo "Executing pre-commit hook"
 . "$(dirname -- "$0")/../../.husky/husky.sh"
-
+echo "Husky.sh loaded successfully"
 yarn lint:staged
+echo "Linting staged files completed"
