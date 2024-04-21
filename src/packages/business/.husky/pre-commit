@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-. "./src/packages/business/husky.sh"
+. "./src/packages/business/.husky/_/husky.sh"
 
 yarn workspace business lint:staged
