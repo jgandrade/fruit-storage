@@ -13,14 +13,14 @@
     ]
   },
   "scripts": {
-    "lint:business": "lint-staged-business && yarn workspace business lint",
+    "lint:business": "lint-staged && yarn workspace business lint",
     "prepare": "husky install"
   },
   "devDependencies": {
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2"
   },
-  "lint-staged-business": {
+  "lint-staged": {
     "./packages/business/src/**/*.ts": "prettier --write"
   }
 }
