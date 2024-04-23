@@ -28,7 +28,3 @@ app.all("*", (_, response: Response) => {
 app.listen(PORT, () => {
   console.log("Server Listening on Port: ", PORT);
 });
-
-// mongodb+srv://johnglennandrade:<password>@fruitstoragecluster.iud0oas.mongodb.net/
-// TmgKFLCUCNEGknvm
-// jgandrade
