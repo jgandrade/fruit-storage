@@ -1,6 +1,6 @@
-# Fruit Storage Task
+# Fruit Storage
 
-This project, **FruitStorageTask**, is a demonstration of Clean Architecture and Domain Driven Design principles applied to a Fruit Storage Task.
+This project, **FruitStorage**, is a demonstration of Clean Architecture and Domain Driven Design principles applied to a Fruit Storage Task.
 
 ## Overview
 
@@ -8,7 +8,7 @@ The project is structured as a monorepo using Yarn workspaces, allowing for bett
 
 ## Repository
 
-- **GitHub**: [Fruit Storage Task Repository](https://github.com/jgandrade/fruit-storage-task)
+- **GitHub**: [Fruit Storage Repository](https://github.com/jgandrade/fruit-storage)
 
 ## Packages
 
@@ -25,7 +25,7 @@ To set up the project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/jgandrade/fruit-storage-task.git
+   git clone https://github.com/jgandrade/fruit-storage.git
 
 2. Go to src directory and run:
 
