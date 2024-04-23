@@ -1,30 +1,27 @@
 import { config as initialiseDotEnvConfig } from "dotenv";
-import bodyParser from "body-parser";
-import express, { Response } from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import { AuthRouter } from "../routes";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { makeSchema } from "nexus";
+import * as types from "../schema";
+import path from "path";
 
 initialiseDotEnvConfig();
 const PORT = process.env.PORT;
-const app = express();
 
-const origin = {
-  origin: "*",
-};
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(cors(origin));
-
-app.use("/auth", AuthRouter);
-
-app.all("*", (_, response: Response) => {
-  const { status } = response;
-  return status(404).send("The Endpoint you are trying to access is not found");
+const schema = makeSchema({
+  types,
+  outputs: {
+    schema: path.join(__dirname, "../generated/schemas.graphql"),
+    typegen: path.join(__dirname, "../generated/schema-types.d.ts"),
+  },
 });
 
-app.listen(PORT, () => {
-  console.log("Server Listening on Port: ", PORT);
-});
+const server = new ApolloServer({ schema });
+
+(async () => {
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: Number(PORT) },
+  });
+
+  console.log(`🚀  Server ready at: ${url}`);
+})();

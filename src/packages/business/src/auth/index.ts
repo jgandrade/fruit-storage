@@ -46,8 +46,11 @@ abstract class Token<T extends User> {
 }
 
 class TokenService<T extends User> extends Token<T> {
-  authenticateToken(): string {
-    return this.jwtAccessSecret;
+  authenticateToken(userData: T): {
+    accessToken: string;
+    refreshToken: string;
+  } {
+    return this.createToken(userData);
   }
 }
 
