@@ -3,3 +3,4 @@ build
 .eslintrc
 .github
 .env
+*.d.ts
