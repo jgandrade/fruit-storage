@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken";
 initialiseDotEnvConfig();
 
 interface User {
-  id: string;
-  fullName: string;
-  userName: string;
-  emailAddress: string;
+  _id: string;
+  fullname: string;
+  username: string;
+  password: string;
 }
 
 abstract class Token<T extends User> {

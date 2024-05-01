@@ -28,9 +28,12 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  AuthPayload: { // root type
+  AuthLoginPayload: { // root type
     accessToken?: string | null; // String
     refreshToken?: string | null; // String
+  }
+  AuthRegisterPayload: { // root type
+    message?: string | null; // String
   }
   Mutation: {};
   Query: {};
@@ -47,12 +50,16 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  AuthPayload: { // field return type
+  AuthLoginPayload: { // field return type
     accessToken: string | null; // String
     refreshToken: string | null; // String
   }
+  AuthRegisterPayload: { // field return type
+    message: string | null; // String
+  }
   Mutation: { // field return type
-    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    login: NexusGenRootTypes['AuthLoginPayload']; // AuthLoginPayload!
+    register: NexusGenRootTypes['AuthRegisterPayload']; // AuthRegisterPayload!
   }
   Query: { // field return type
     ok: boolean; // Boolean!
@@ -60,12 +67,16 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  AuthPayload: { // field return type name
+  AuthLoginPayload: { // field return type name
     accessToken: 'String'
     refreshToken: 'String'
   }
+  AuthRegisterPayload: { // field return type name
+    message: 'String'
+  }
   Mutation: { // field return type name
-    login: 'AuthPayload'
+    login: 'AuthLoginPayload'
+    register: 'AuthRegisterPayload'
   }
   Query: { // field return type name
     ok: 'Boolean'
@@ -75,6 +86,12 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     login: { // args
+      password: string; // String!
+      username: string; // String!
+    }
+    register: { // args
+      confirmPassword: string; // String!
+      fullname: string; // String!
       password: string; // String!
       username: string; // String!
     }

@@ -3,10 +3,14 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { makeSchema } from "nexus";
 import * as types from "../schema";
+import mongoose from "mongoose";
 import path from "path";
 
 initialiseDotEnvConfig();
 const PORT = process.env.PORT;
+
+mongoose.connect(process.env.MONGO_DB_URL as string);
+const database = mongoose.connection;
 
 const schema = makeSchema({
   types,
@@ -24,4 +28,11 @@ const server = new ApolloServer({ schema });
   });
 
   console.log(`🚀  Server ready at: ${url}`);
+  database.on(
+    "error",
+    console.error.bind(console, "Failed connecting to database."),
+  );
+  database.once("open", () =>
+    console.log("Successfully connected to database"),
+  );
 })();
