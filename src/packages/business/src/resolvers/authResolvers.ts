@@ -1,7 +1,7 @@
 import { GraphQLError } from "graphql";
 import bcrypt from "bcrypt";
 import TokenService from "../auth";
-import { User } from "../schema";
+import { Models } from "../infra/mongoose";
 import { z } from "zod";
 
 const registerSchema = z
@@ -24,7 +24,7 @@ export const loginResolve = async (args: {
 }) => {
   const { username, password } = args;
 
-  const userResults = await User.find({
+  const userResults = await Models.User.find({
     $or: [{ username }],
   });
 
@@ -67,12 +67,12 @@ export const registerResolve = async (args: Register) => {
     });
   }
 
-  const userResults = await User.find({
+  const userResults = await Models.User.find({
     $or: [{ username }, { fullname }],
   });
 
   if (!userResults.length) {
-    const registerUser = new User({
+    const registerUser = new Models.User({
       fullname,
       username,
       password: bcrypt.hashSync(password, 10),
@@ -83,7 +83,7 @@ export const registerResolve = async (args: Register) => {
     return { message: "Registered Successfully" };
   }
 
-  throw new GraphQLError("User already exists", {
+  throw new GraphQLError("Models.User already exists", {
     extensions: {
       code: "OPERATION-DENIED",
     },
