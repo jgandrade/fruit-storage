@@ -9,7 +9,7 @@ enum Status {
   "full",
 }
 
-interface FruitStorageDoc extends Document {
+interface IFruitStorage extends Document {
   fruitStorageName: string;
   imageUrl: string;
   description: string;
@@ -19,32 +19,39 @@ interface FruitStorageDoc extends Document {
   audit_logs: LogDoc;
 }
 
-export const FruitStorageSchema = new Schema<FruitStorageDoc>({
-  fruitStorageName: {
-    type: String,
-    required: [true, "Fruit Storage Name is required"],
+export const FruitStorageSchema = new Schema<IFruitStorage>(
+  {
+    id: {
+      type: String,
+      required: [true, "ID is required as Unique Identifier"],
+    },
+    fruitStorageName: {
+      type: String,
+      required: [true, "Fruit Storage Name is required"],
+    },
+    imageUrl: {
+      type: String,
+      required: [true, "Image URL is required"],
+    },
+    description: {
+      type: String,
+      required: [true, "Description is required"],
+    },
+    quantity_limit: {
+      type: Number,
+      required: [true, "Quantity Limit is required"],
+    },
+    total_quantity: {
+      type: Number,
+      required: [true, "Total Quantity is required"],
+    },
+    status: String,
+    audit_logs: [LogSchema],
   },
-  imageUrl: {
-    type: String,
-    required: [true, "Image URL is required"],
-  },
-  description: {
-    type: String,
-    required: [true, "Description is required"],
-  },
-  quantity_limit: {
-    type: Number,
-    required: [true, "Quantity Limit is required"],
-  },
-  total_quantity: {
-    type: Number,
-    required: [true, "Total Quantity is required"],
-  },
-  status: String,
-  audit_logs: [LogSchema],
-});
+  { _id: false },
+);
 
-export const FruitStorage = mongoose.model<FruitStorageDoc>(
+export const FruitStorage = mongoose.model<IFruitStorage>(
   "FruitStorage",
   FruitStorageSchema,
 );

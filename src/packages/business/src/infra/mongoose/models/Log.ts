@@ -31,23 +31,30 @@ export interface LogDoc extends Document {
   action: Actions;
 }
 
-export const LogSchema = new Schema<LogDoc>({
-  username: {
-    type: String,
-    required: [true, "Username is required"],
+export const LogSchema = new Schema<LogDoc>(
+  {
+    id: {
+      type: String,
+      required: [true, "ID is required as Unique Identifier"],
+    },
+    username: {
+      type: String,
+      required: [true, "Username is required"],
+    },
+    fullname: {
+      type: String,
+      required: [true, "Full Name is required"],
+    },
+    storage_id: {
+      type: String,
+      required: [true, "Storage ID is required"],
+    },
+    action: {
+      type: Object,
+      required: [true, "Action is required"],
+    },
   },
-  fullname: {
-    type: String,
-    required: [true, "Full Name is required"],
-  },
-  storage_id: {
-    type: String,
-    required: [true, "Storage ID is required"],
-  },
-  action: {
-    type: Object,
-    required: [true, "Action is required"],
-  },
-});
+  { _id: false },
+);
 
 export const Log = mongoose.model<LogDoc>("Log", LogSchema);

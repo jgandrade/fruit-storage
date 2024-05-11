@@ -1,16 +1,10 @@
 import { config as initialiseDotEnvConfig } from "dotenv";
 import jwt from "jsonwebtoken";
+import { User } from "../../Domain/Entities/user";
 
 initialiseDotEnvConfig();
 
-interface User {
-  _id: string;
-  fullname: string;
-  username: string;
-  password: string;
-}
-
-abstract class Token<T extends User> {
+export abstract class Token<T extends User> {
   protected jwtAccessSecret: string;
 
   protected jwtRefreshSecret: string;
@@ -44,14 +38,3 @@ abstract class Token<T extends User> {
     return { accessToken, refreshToken };
   }
 }
-
-class TokenService<T extends User> extends Token<T> {
-  authenticateToken(userData: T): {
-    accessToken: string;
-    refreshToken: string;
-  } {
-    return this.createToken(userData);
-  }
-}
-
-export default TokenService;

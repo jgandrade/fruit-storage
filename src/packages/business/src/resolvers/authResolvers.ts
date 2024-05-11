@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 import bcrypt from "bcrypt";
-import TokenService from "../auth";
+import { TokenService } from "../modules/User/_Services/auth/tokenService";
 import { Models } from "../infra/mongoose";
 import { z } from "zod";
 
@@ -26,7 +26,7 @@ export const loginResolve = async (args: {
 
   const userResults = await Models.User.find({
     $or: [{ username }],
-  });
+  }).lean();
 
   if (userResults.length > 0) {
     const isPasswordCorrect = bcrypt.compareSync(
@@ -69,7 +69,7 @@ export const registerResolve = async (args: Register) => {
 
   const userResults = await Models.User.find({
     $or: [{ username }, { fullname }],
-  });
+  }).lean();
 
   if (!userResults.length) {
     const registerUser = new Models.User({
