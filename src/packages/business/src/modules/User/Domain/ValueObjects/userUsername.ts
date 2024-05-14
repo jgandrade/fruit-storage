@@ -14,7 +14,7 @@ export class UserUsername extends ValueObject<UserUsernameProps> {
     super(props);
   }
 
-  public static create(email: string): Result<UserUsernameProps> {
-    return Result.ok<UserUsernameProps>(new UserUsername({ value: email }));
+  public static create(username: string): Result<UserUsernameProps> {
+    return Result.ok(new UserUsername({ value: username }));
   }
 }

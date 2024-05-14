@@ -15,7 +15,7 @@ export class UserPassword extends ValueObject<UserPasswordProps> {
     super(props);
   }
 
-  private hashPassword(password: string): Promise<string> {
+  public static hashPassword(password: string): Promise<string> {
     return new Promise((resolve, reject) => {
       bcrypt.hash(password, 10, (err, hash) => {
         if (err) return reject(err);
@@ -24,7 +24,11 @@ export class UserPassword extends ValueObject<UserPasswordProps> {
     });
   }
 
-  public static create(props: UserPasswordProps): Result<UserPassword> {
+  public static async create(
+    props: UserPasswordProps,
+  ): Promise<Result<UserPassword>> {
+    const passwordHashed = await this.hashPassword(props.value);
+    props = { ...props, value: passwordHashed };
     return Result.ok(new UserPassword(props));
   }
 }

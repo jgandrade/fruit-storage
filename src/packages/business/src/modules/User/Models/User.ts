@@ -1,16 +1,17 @@
 import mongoose, { Document } from "mongoose";
-import { LogDoc, LogSchema } from "./Log";
+import { LogDoc, LogSchema } from "../../../infra/mongoose/models/Log";
 
 const { Schema } = mongoose;
 
-export interface UserDoc extends Document {
+export interface IUser extends Document {
+  id: string;
   username: string;
   password: string;
   fullname: string;
-  user_logs: Array<LogDoc>;
+  user_logs?: Array<LogDoc>;
 }
 
-const UserSchema = new Schema<UserDoc>(
+const UserSchema = new Schema<IUser>(
   {
     id: {
       type: String,
@@ -33,4 +34,4 @@ const UserSchema = new Schema<UserDoc>(
   { _id: false },
 );
 
-export const User = mongoose.model<UserDoc>("User", UserSchema);
+export const User = mongoose.model<IUser>("User", UserSchema);

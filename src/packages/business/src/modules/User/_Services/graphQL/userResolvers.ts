@@ -1,8 +1,8 @@
 import { GraphQLError } from "graphql";
 import bcrypt from "bcrypt";
-import { TokenService } from "../modules/User/_Services/auth/tokenService";
-import { Models } from "../infra/mongoose";
+import { TokenService } from "../auth/tokenService";
 import { z } from "zod";
+import { UserRepository } from "../../Repository";
 
 const registerSchema = z
   .object({
@@ -24,20 +24,17 @@ export const loginResolve = async (args: {
 }) => {
   const { username, password } = args;
 
-  const userResults = await Models.User.find({
-    $or: [{ username }],
-  }).lean();
+  const userData = await UserRepository.findUserByProps({
+    username,
+  });
 
-  if (userResults.length > 0) {
-    const isPasswordCorrect = bcrypt.compareSync(
-      password,
-      userResults[0].password,
-    );
+  if (userData) {
+    const isPasswordCorrect = bcrypt.compareSync(password, userData.password);
 
     if (isPasswordCorrect) {
       const tokenService = new TokenService();
 
-      return tokenService.authenticateToken(userResults[0].toObject());
+      return tokenService.authenticateToken(userData.toObject());
     }
 
     throw new GraphQLError("Password is Incorrect", {
@@ -67,18 +64,17 @@ export const registerResolve = async (args: Register) => {
     });
   }
 
-  const userResults = await Models.User.find({
-    $or: [{ username }, { fullname }],
-  }).lean();
+  const userData = await UserRepository.findUserByProps({
+    username,
+    fullname,
+  });
 
-  if (!userResults.length) {
-    const registerUser = new Models.User({
+  if (!userData) {
+    UserRepository.save({
       fullname,
+      password,
       username,
-      password: bcrypt.hashSync(password, 10),
     });
-
-    registerUser.save();
 
     return { message: "Registered Successfully" };
   }
