@@ -1,1 +1,1 @@
-import "./app";
+import "./infra/http/app";
