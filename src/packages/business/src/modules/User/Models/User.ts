@@ -13,10 +13,6 @@ export interface IUser extends Document {
 
 const UserSchema = new Schema<IUser>({
   _id: { type: Types.ObjectId },
-  userId: {
-    type: String,
-    required: [true, "UserId is required"],
-  },
   username: {
     type: String,
     required: [true, "Username is required"],

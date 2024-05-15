@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { GraphQLError } from "graphql";
 import { UserRepository } from "../../Repository/userRepository";
+import { UserCreationService } from "../../_Services/UserCreationService";
 
 const registerSchema = z
   .object({
@@ -49,13 +50,13 @@ class RegisterUseCase {
       });
     }
 
-    const newUser = this.userRepository.createUser({
+    const userCreated = await UserCreationService.createUser({
       fullname,
       password,
       username,
     });
 
-    await this.userRepository.save(newUser);
+    await this.userRepository.save(userCreated);
 
     return { message: "Registered Successfully" };
   }

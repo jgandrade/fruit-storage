@@ -30,15 +30,6 @@ export class UserRepository implements IUserRepository {
     return userResults[0];
   };
 
-  public createUser = (userCreds: {
-    fullname: string;
-    username: string;
-    password: string;
-  }) => {
-    const userToDomain = User.create(userCreds);
-    return userToDomain.getValue();
-  };
-
   public async save(user: User): Promise<void> {
     const persistedUser = UserMapper.toPersistence(user);
     const NewUserModel = new UserModel(persistedUser);
