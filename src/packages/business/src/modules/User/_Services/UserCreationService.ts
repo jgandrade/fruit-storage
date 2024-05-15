@@ -9,7 +9,7 @@ interface UserCreds {
 }
 
 export abstract class UserCreationService {
-  public static async createUser(
+  public static async createUserWithHashedPassword(
     userCreds: UserCreds,
     id?: UniqueEntityID
   ): Promise<User> {

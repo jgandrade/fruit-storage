@@ -50,7 +50,7 @@ class RegisterUseCase {
       });
     }
 
-    const userCreated = await UserCreationService.createUser({
+    const userCreated = await UserCreationService.createUserWithHashedPassword({
       fullname,
       password,
       username,

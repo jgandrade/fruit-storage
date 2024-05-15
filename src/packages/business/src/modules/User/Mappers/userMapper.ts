@@ -1,8 +1,6 @@
-import { User } from "../Domain/Entities/user";
 import { UniqueEntityID } from "../../../core/domain/UniqueEntityID";
+import { User } from "../Domain/Entities/user";
 import { IUserDTO } from "../DTO/userDTO";
-import { UserPassword } from "../Domain/ValueObjects/userPassword";
-import { UserCreationService } from "../_Services/UserCreationService";
 
 export class UserMapper {
   public static toPersistence(user: User): IUserDTO {
@@ -15,17 +13,16 @@ export class UserMapper {
   }
 
   public static async toDomain(user: IUserDTO): Promise<User> {
-    const userPassword = await UserPassword.create({ value: user.password });
     const createdUniqueIdFromExistingUserId = new UniqueEntityID(user._id);
-    const domainUser = await UserCreationService.createUser(
+    const domainUser = User.create(
       {
         fullname: user.fullname,
-        password: userPassword.getValue().value,
+        password: user.password,
         username: user.username,
       },
       createdUniqueIdFromExistingUserId
     );
 
-    return domainUser;
+    return domainUser.getValue();
   }
 }
