@@ -1,7 +1,7 @@
-import { UniqueEntityID } from "../../../core/domain/UniqueEntityID";
 import { User } from "../Domain/Entities/user";
-import { UserPassword } from "../Domain/ValueObjects/userPassword";
+import { UniqueEntityID } from "../../../core/domain/UniqueEntityID";
 import { IUserDTO } from "../DTO/userDTO";
+import { UserPassword } from "../Domain/ValueObjects/userPassword";
 
 export class UserMapper {
   public static toPersistence(user: User): IUserDTO {
