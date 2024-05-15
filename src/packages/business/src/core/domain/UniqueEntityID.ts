@@ -1,8 +1,8 @@
-import { v4 as uuid } from "uuid";
 import { Identifier } from "./Identifier";
+import { Types } from "mongoose";
 
-export class UniqueEntityID extends Identifier<string> {
-  constructor(id?: string) {
-    super(id ? id : uuid());
+export class UniqueEntityID extends Identifier<Types.ObjectId> {
+  constructor(id?: Types.ObjectId) {
+    super(id ? id : new Types.ObjectId());
   }
 }

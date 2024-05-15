@@ -4,26 +4,25 @@ import { UserPassword } from "../Domain/ValueObjects/userPassword";
 import { IUserDTO } from "../DTO/userDTO";
 
 export class UserMapper {
-  public static toDTO(user: User): IUserDTO {
+  public static toPersistence(user: User): IUserDTO {
     return {
-      id: user.userId.unique_id.toString(),
-      username: user.username.value,
-      password: user.password.value,
-      fullname: user.fullname.value,
+      _id: user.unique_id.toValue(),
+      username: user.username,
+      password: user.password,
+      fullname: user.fullname,
     };
   }
 
   public static async toDomain(user: IUserDTO): Promise<User> {
     const userPassword = await UserPassword.create({ value: user.password });
-
+    const createdUniqueIdFromExistingUserId = new UniqueEntityID(user._id);
     const domainUser = User.create(
       {
-        id: user.id,
         fullname: user.fullname,
         password: userPassword.getValue().value,
         username: user.username,
       },
-      new UniqueEntityID(),
+      createdUniqueIdFromExistingUserId
     );
 
     return domainUser.getValue();

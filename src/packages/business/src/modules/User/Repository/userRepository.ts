@@ -1,4 +1,4 @@
-import { IUserDTO } from "../DTO/userDTO";
+import { User } from "../Domain/Entities/user";
 import { UserMapper } from "../Mappers";
 import { IUser, User as UserModel } from "../Models/User";
 
@@ -30,9 +30,17 @@ export class UserRepository implements IUserRepository {
     return userResults[0];
   };
 
-  public async save(user: IUserDTO): Promise<void> {
-    const userToDomain = await UserMapper.toDomain(user);
-    const persistedUser = UserMapper.toDTO(userToDomain);
+  public createUser = (userCreds: {
+    fullname: string;
+    username: string;
+    password: string;
+  }) => {
+    const userToDomain = User.create(userCreds);
+    return userToDomain.getValue();
+  };
+
+  public async save(user: User): Promise<void> {
+    const persistedUser = UserMapper.toPersistence(user);
     const NewUserModel = new UserModel(persistedUser);
     NewUserModel.save();
   }

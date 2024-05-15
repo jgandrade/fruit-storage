@@ -1,13 +1,14 @@
-import { User } from "../../Domain/Entities/user";
+import { IUserDTO } from "../../DTO/userDTO";
 import { Token } from "./token";
 
-export class TokenService<T extends User> extends Token<T> {
-  authenticateToken(userData: T): {
-    accessToken: string;
-    refreshToken: string;
-  } {
+export interface ITokenResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export class TokenService<T extends IUserDTO> extends Token<T> {
+  authenticateToken(userData: T): ITokenResponse {
     return this.createToken(userData);
   }
 }
 
-export default TokenService;

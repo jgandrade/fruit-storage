@@ -1,12 +1,12 @@
 import { UniqueEntityID } from "./UniqueEntityID";
 
 export abstract class Entity<T> {
-  protected readonly id: UniqueEntityID;
+  protected readonly _id: UniqueEntityID;
 
   public readonly props: T;
 
   constructor(props: T, id?: UniqueEntityID) {
-    this.id = id ? id : new UniqueEntityID();
+    this._id = id ? id : new UniqueEntityID();
     this.props = props;
   }
 
@@ -23,7 +23,7 @@ export abstract class Entity<T> {
       return false;
     }
 
-    return this.id.equals(object.id);
+    return this._id.equals(object._id);
   }
 
   private isEntity(object: unknown): boolean {

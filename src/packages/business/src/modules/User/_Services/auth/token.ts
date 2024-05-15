@@ -1,10 +1,11 @@
 import { config as initialiseDotEnvConfig } from "dotenv";
 import jwt from "jsonwebtoken";
-import { User } from "../../Domain/Entities/user";
+import { ITokenResponse } from "./tokenService";
+import { IUserDTO } from "../../DTO/userDTO";
 
 initialiseDotEnvConfig();
 
-export abstract class Token<T extends User> {
+export abstract class Token<T extends IUserDTO> {
   protected jwtAccessSecret: string;
 
   protected jwtRefreshSecret: string;
@@ -29,10 +30,7 @@ export abstract class Token<T extends User> {
     });
   }
 
-  protected createToken(userData: T): {
-    accessToken: string;
-    refreshToken: string;
-  } {
+  protected createToken(userData: T): ITokenResponse {
     const accessToken = this.getAccessToken(userData);
     const refreshToken = this.getRefreshToken(userData);
     return { accessToken, refreshToken };
